@@ -1,7 +1,7 @@
 import kaplay from "kaplay";
 
 //prettier-ignore
-export const kplay = kaplay({
+const kplay = kaplay({
     global       : false,
     debug        : true,
     debugKey     : '`',
@@ -16,3 +16,5 @@ export const kplay = kaplay({
         mouse : "left",
     },
 });
+
+export default kplay;
