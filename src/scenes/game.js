@@ -1,4 +1,6 @@
+import { addMotobug } from "../characters/motobug";
 import { addSonic } from "../characters/sonic";
+import { addRing } from "../collectables/ring";
 import kplay from "../kaplayCtx";
 
 export default function game() {
@@ -25,15 +27,76 @@ export default function game() {
     ]);
 
     kplay.setGravity(3000);
-
-    const sonic = addSonic(kplay.vec2(200, 745));
-    sonic.setKeybinds();
-    sonic.setEvents();
-
     let gameSpeed = 500;
     kplay.loop(1, () => {
         gameSpeed += 25;
     });
+
+    // Spawn Sonic
+    const sonic = addSonic(kplay.vec2(200, 745));
+    sonic.setKeybinds();
+    sonic.setEvents();
+    sonic.onCollide("enemies_motobug", (enemy_id) => {
+        if (!sonic.isGrounded()) {
+            kplay.play("kill_enemy", { volume: 0.5 });
+            kplay.play("hyper_ring", { volume: 0.5 });
+            kplay.destroy(enemy_id);
+
+            sonic.play("jump");
+            sonic.jump();
+        } else {
+            kplay.play("take_damage", { volume: 0.5 });
+            kplay.go("gameover");
+        }
+    });
+    sonic.onCollide("collectables_rings", (ring_id) => {
+        kplay.play("take_ring", { volume: 0.5 });
+        kplay.destroy(ring_id);
+    });
+
+    // Spawn Motorbugs
+    const spawnMotobug = () => {
+        const motobug = addMotobug(kplay.vec2(1950, 775));
+
+        motobug.onUpdate(() => {
+            if (gameSpeed < 3000) {
+                motobug.move(-(gameSpeed + 300), 0);
+                return;
+            }
+
+            motobug.move(-gameSpeed, 0);
+        });
+
+        motobug.onExitScreen(() => {
+            if (motobug.pos.x < 0) {
+                kplay.destroy(motobug);
+            }
+        });
+
+        const spawnRate = kplay.rand(0.5, 2.5);
+        kplay.wait(spawnRate, spawnMotobug);
+    };
+    spawnMotobug();
+
+    // Spawn Collectables (rings)
+    const spawnRings = () => {
+        const ring_pos = kplay.rand(550, 775);
+        const ring = addRing(kplay.vec2(1950, ring_pos));
+
+        ring.onUpdate(() => {
+            ring.move(-gameSpeed, 0);
+        });
+
+        ring.onExitScreen(() => {
+            if (ring.pos.x < 0) {
+                kplay.destroy(ring);
+            }
+        });
+
+        const spawnRate = kplay.rand(1, 3);
+        kplay.wait(spawnRate, spawnRings);
+    };
+    spawnRings();
 
     kplay.onUpdate(() => {
         // Moving the background

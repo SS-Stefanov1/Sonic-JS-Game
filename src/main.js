@@ -25,7 +25,7 @@ kplay.loadSprite("motobug", "graphics/characters/enemies/motobug.png", {
 });
 
 // Collectables
-kplay.loadSprite("coins", "graphics/collectables/coins.png", {
+kplay.loadSprite("rings", "graphics/collectables/rings.png", {
     sliceX: 16,
     sliceY: 1,
     anims: {

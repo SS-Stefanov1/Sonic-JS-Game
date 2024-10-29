@@ -25,6 +25,7 @@ export function addSonic(pos) {
                 });
             },
         },
+        "characters_sonic",
     ]);
 
     return sonic;
