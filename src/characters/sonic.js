@@ -8,13 +8,13 @@ export function addSonic(pos) {
         kplay.body({ jumpForce: 1600 }),
         kplay.anchor("center"), // Move drawing point from topleft to center
         kplay.pos(pos),
+        kplay.doubleJump(3),
         {
             setKeybinds() {
                 kplay.onButtonPress("jump", () => {
                     if (this.isGrounded()) {
                         this.play("jump"); // Playing the jump animation
                         this.jump();
-
                         kplay.play("jump", { volume: 0.3 }); // Playing the jump sound
                     }
                 });

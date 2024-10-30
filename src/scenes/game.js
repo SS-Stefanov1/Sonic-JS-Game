@@ -32,6 +32,12 @@ export default function game() {
         gameSpeed += 25;
     });
 
+    // Score Logic
+    let player_score = 0;
+    let score_multip = 1;
+
+    const scoreDisplay = kplay.add([kplay.text("Score: 0", { font: "mania", size: 72 }), kplay.pos(25, 25)]);
+
     // Spawn Sonic
     const sonic = addSonic(kplay.vec2(200, 745));
     sonic.setKeybinds();
@@ -43,15 +49,21 @@ export default function game() {
             kplay.destroy(enemy_id);
 
             sonic.play("jump");
-            sonic.jump();
+            sonic.jump(800);
+            score_multip++;
+            player_score += 5 * score_multip;
+            scoreDisplay.text = scoreDisplay.text.slice(0, 7) + player_score;
         } else {
             kplay.play("take_damage", { volume: 0.5 });
-            kplay.go("gameover");
+            kplay.go("game-over", player_score);
         }
     });
+
     sonic.onCollide("collectables_rings", (ring_id) => {
         kplay.play("take_ring", { volume: 0.5 });
         kplay.destroy(ring_id);
+        player_score++;
+        scoreDisplay.text = scoreDisplay.text.slice(0, 7) + player_score;
     });
 
     // Spawn Motorbugs
@@ -99,6 +111,10 @@ export default function game() {
     spawnRings();
 
     kplay.onUpdate(() => {
+        if (sonic.isGrounded()) {
+            score_multip = 1;
+        }
+
         // Moving the background
         if (bgPieces[1].pos.x < 0) {
             bgPieces[0].moveTo(bgPieces[1].pos.x + bgWidth * 2, 0);

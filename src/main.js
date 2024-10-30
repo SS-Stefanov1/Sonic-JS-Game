@@ -1,5 +1,6 @@
 import kplay from "./kaplayCtx";
 import game from "./scenes/game";
+import gameover from "./scenes/gameover";
 import mainMenu from "./scenes/mainMenu";
 
 // Enviornment
@@ -51,7 +52,7 @@ kplay.scene("main-menu", mainMenu);
 
 kplay.scene("play-game", game);
 
-kplay.scene("game-over", () => {});
+kplay.scene("game-over", gameover);
 
 kplay.go("main-menu");
 
