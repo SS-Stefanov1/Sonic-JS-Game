@@ -39,7 +39,9 @@ kplay.loadSprite("rings", "graphics/collectables/rings.png", {
 kplay.loadFont("mania", "fonts/mania.ttf");
 
 // Sounds
-kplay.loadSound("background", "sounds/background.mp3");
+//-> Background Music
+kplay.loadSound("level_1_bg", "sounds/level_1_bg.mp3");
+
 kplay.loadSound("take_damage", "sounds/take_damage.wav");
 kplay.loadSound("take_ring", "sounds/take_ring.wav");
 kplay.loadSound("kill_enemy", "sounds/kill_enemy.wav");

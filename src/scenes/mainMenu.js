@@ -24,6 +24,14 @@ export default function mainMenu() {
         kplay.add([kplay.sprite("platform"), kplay.pos(platformWidth * 4, 450), kplay.scale(4), kplay.opacity(1)]),
     ];
 
+    kplay.add([
+        kplay.body({ isStatic: true }),
+        kplay.rect(1920, 3000),
+        kplay.opacity(0),
+        kplay.pos(0, 832),
+        kplay.area(),
+    ]);
+
     // Main Menu texts
     kplay.add([
         kplay.text("Main Menu", { font: "mania", size: "80" }),

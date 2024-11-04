@@ -4,6 +4,8 @@ import { addRing } from "../collectables/ring";
 import kplay from "../kaplayCtx";
 
 export default function game() {
+    const bgMusic = kplay.play("level_1_bg", { volume: 0.2, loop: true });
+
     // Defining the background
     const bgWidth = 1920;
     const bgPieces = [
@@ -55,7 +57,7 @@ export default function game() {
             scoreDisplay.text = scoreDisplay.text.slice(0, 7) + player_score;
         } else {
             kplay.play("take_damage", { volume: 0.5 });
-            kplay.go("game-over", player_score);
+            kplay.go("game-over", player_score, { bgMusic });
         }
     });
 
@@ -92,20 +94,35 @@ export default function game() {
 
     // Spawn Collectables (rings)
     const spawnRings = () => {
-        const ring_pos = kplay.rand(550, 775);
-        const ring = addRing(kplay.vec2(1950, ring_pos));
+        const ring_shapes = [
+            [
+                [1900, 700],
+                [2000, 650],
+                [2100, 600],
+                [2200, 550],
+                [2300, 600],
+                [2400, 650],
+                [2500, 700],
+            ],
+        ];
+        //const ring_pos = kplay.rand(550, 775);
+        const current_shape = ring_shapes[kplay.rand(0, ring_shapes.length - 1)];
 
-        ring.onUpdate(() => {
-            ring.move(-gameSpeed, 0);
-        });
+        for (let [x, y] of current_shape) {
+            const ring = addRing(kplay.vec2(x, y));
 
-        ring.onExitScreen(() => {
-            if (ring.pos.x < 0) {
-                kplay.destroy(ring);
-            }
-        });
+            ring.onUpdate(() => {
+                ring.move(-gameSpeed, 0);
+            });
 
-        const spawnRate = kplay.rand(1, 3);
+            ring.onExitScreen(() => {
+                if (ring.pos.x < 0) {
+                    kplay.destroy(ring);
+                }
+            });
+        }
+
+        const spawnRate = kplay.rand(1, 5);
         kplay.wait(spawnRate, spawnRings);
     };
     spawnRings();

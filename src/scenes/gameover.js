@@ -1,6 +1,8 @@
 import kplay from "../kaplayCtx";
 
-export default function gameOver(score) {
+export default function gameOver(score, bgMusic) {
+    bgMusic.paused = true;
+
     kplay.add([
         kplay.text("Game Over", { font: "mania", size: "80" }),
         kplay.pos(kplay.center().x, 250),
