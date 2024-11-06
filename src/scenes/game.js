@@ -96,17 +96,32 @@ export default function game() {
     const spawnRings = () => {
         const ring_shapes = [
             [
-                [1900, 700],
-                [2000, 650],
-                [2100, 600],
-                [2200, 550],
-                [2300, 600],
-                [2400, 650],
-                [2500, 700],
+                [1900, 500],
+                [2000, 450],
+                [2100, 400],
+                [2200, 350],
+                [2300, 400],
+                [2400, 450],
+                [2500, 500],
+            ],
+            [
+                [1900, 575],
+                [2000, 575],
+                [2100, 575],
+                [2200, 575],
+                [2300, 575],
+            ],
+            [
+                [1900, 575],
+                [1900, 525],
+                [2000, 475],
+                [2000, 625],
+                [2100, 575],
+                [2100, 525],
             ],
         ];
         //const ring_pos = kplay.rand(550, 775);
-        const current_shape = ring_shapes[kplay.rand(0, ring_shapes.length - 1)];
+        const current_shape = ring_shapes[~~(Math.random() * ring_shapes.length)];
 
         for (let [x, y] of current_shape) {
             const ring = addRing(kplay.vec2(x, y));
@@ -122,7 +137,7 @@ export default function game() {
             });
         }
 
-        const spawnRate = kplay.rand(1, 5);
+        const spawnRate = kplay.rand(1, 10);
         kplay.wait(spawnRate, spawnRings);
     };
     spawnRings();
