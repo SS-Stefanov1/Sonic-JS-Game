@@ -69,53 +69,36 @@ export default function game() {
         scoreDisplay.text = scoreDisplay.text.slice(0, 7) + player_score;
     });
 
-    // Spawn Motorbugs
-    const spawnMotobug = () => {
-        const motobug = addMotobug(kplay.vec2(1950, 775));
+    const enemySpawner = (enemyType, startPos, spw_rate, acceleration) => {
+        const spawnEnemy = () => {
+            const new_enemy = enemyType(kplay.vec2(startPos.x, startPos.y));
 
-        motobug.onUpdate(() => {
-            if (gameSpeed < 3000) {
-                motobug.move(-(gameSpeed + 300), 0);
-                return;
-            }
+            new_enemy.onUpdate(() => {
+                if (gameSpeed < 3000) {
+                    new_enemy.move(-(gameSpeed + acceleration), 0);
+                } else {
+                    new_enemy.move(-gameSpeed, 0);
+                }
+            });
 
-            motobug.move(-gameSpeed, 0);
-        });
+            new_enemy.onExitScreen(() => {
+                if (new_enemy.pos.x < 0) {
+                    kplay.destroy(new_enemy);
+                }
+            });
 
-        motobug.onExitScreen(() => {
-            if (motobug.pos.x < 0) {
-                kplay.destroy(motobug);
-            }
-        });
+            const spawnRate = kplay.rand(spw_rate.min, spw_rate.max);
+            kplay.wait(spawnRate, spawnEnemy);
+        };
 
-        const spawnRate = kplay.rand(0.5, 5);
-        kplay.wait(spawnRate, spawnMotobug);
+        spawnEnemy();
     };
-    spawnMotobug();
+
+    // Spawn Motorbugs
+    enemySpawner(addMotobug, { x: 1950, y: 775 }, { min: 0.5, max: 5 }, 300);
 
     // Spawn Robo Runners
-    const spawnRoboRunner = () => {
-        const roborunner = addRoboRunner(kplay.vec2(1950, 740));
-
-        roborunner.onUpdate(() => {
-            if (gameSpeed < 3000) {
-                roborunner.move(-(gameSpeed + 500), 0);
-                return;
-            }
-
-            roborunner.move(-gameSpeed, 0);
-        });
-
-        roborunner.onExitScreen(() => {
-            if (roborunner.pos.x < 0) {
-                kplay.destroy(roborunner);
-            }
-        });
-
-        const spawnRate = kplay.rand(0.5, 10);
-        kplay.wait(spawnRate, spawnRoboRunner);
-    };
-    spawnRoboRunner();
+    enemySpawner(addRoboRunner, { x: 1950, y: 740 }, { min: 0.5, max: 10 }, 500);
 
     // Spawn Collectables (rings)
     const spawnRings = () => {
