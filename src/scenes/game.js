@@ -1,4 +1,5 @@
 import { addMotobug } from "../characters/motobug";
+import { addRoboRunner } from "../characters/roborunner";
 import { addSonic } from "../characters/sonic";
 import { addRing } from "../collectables/ring";
 import kplay from "../kaplayCtx";
@@ -91,6 +92,30 @@ export default function game() {
         kplay.wait(spawnRate, spawnMotobug);
     };
     spawnMotobug();
+
+    // Spawn Robo Runners
+    const spawnRoboRunner = () => {
+        const roborunner = addRoboRunner(kplay.vec2(1950, 740));
+
+        roborunner.onUpdate(() => {
+            if (gameSpeed < 3000) {
+                roborunner.move(-(gameSpeed + 500), 0);
+                return;
+            }
+
+            roborunner.move(-gameSpeed, 0);
+        });
+
+        roborunner.onExitScreen(() => {
+            if (roborunner.pos.x < 0) {
+                kplay.destroy(roborunner);
+            }
+        });
+
+        const spawnRate = kplay.rand(0.5, 10);
+        kplay.wait(spawnRate, spawnRoboRunner);
+    };
+    spawnRoboRunner();
 
     // Spawn Collectables (rings)
     const spawnRings = () => {
