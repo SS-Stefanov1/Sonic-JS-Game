@@ -45,7 +45,7 @@ export default function game() {
     const sonic = addSonic(kplay.vec2(200, 745));
     sonic.setKeybinds();
     sonic.setEvents();
-    sonic.onCollide("enemies_motobug", (enemy_id) => {
+    sonic.onCollide("enemies", (enemy_id) => {
         if (!sonic.isGrounded()) {
             kplay.play("kill_enemy", { volume: 0.5 });
             kplay.play("hyper_ring", { volume: 0.5 });
@@ -88,7 +88,7 @@ export default function game() {
             }
         });
 
-        const spawnRate = kplay.rand(0.5, 2.5);
+        const spawnRate = kplay.rand(0.5, 5);
         kplay.wait(spawnRate, spawnMotobug);
     };
     spawnMotobug();
@@ -180,10 +180,6 @@ export default function game() {
 
         bgPieces[0].move(-100, 0);
         bgPieces[1].moveTo(bgPieces[0].pos.x + bgWidth * 2, 0);
-
-        // Moving background up/down when jumping
-        bgPieces[0].moveTo(bgPieces[0].pos.x, -sonic.pos.y / 10 - 50);
-        bgPieces[1].moveTo(bgPieces[0].pos.x, -sonic.pos.y / 10 - 50);
 
         // Moving the platforms
         if (platformPieces[1].pos.x < 0) {

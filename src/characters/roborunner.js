@@ -8,7 +8,7 @@ export function addRoboRunner(pos) {
         kplay.anchor("center"),
         kplay.pos(pos),
         kplay.offscreen(),
-        "enemies_roborunner",
+        "enemies",
     ]);
 
     return roborunner;

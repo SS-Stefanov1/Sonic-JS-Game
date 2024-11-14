@@ -8,7 +8,7 @@ export function addMotobug(pos) {
         kplay.anchor("center"),
         kplay.pos(pos),
         kplay.offscreen(),
-        "enemies_motobug",
+        "enemies",
     ]);
 
     return motobug;
