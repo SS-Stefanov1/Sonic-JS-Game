@@ -8,15 +8,21 @@ kplay.loadSprite("city-bg", "graphics/enviornments/level_1/city-bg.png");
 kplay.loadSprite("platform", "graphics/enviornments/level_1/platform.png");
 
 // Characters
-kplay.loadSprite("sonic", "graphics/characters/sonic.png", {
-    sliceX: 8,
-    sliceY: 2,
+kplay.loadSprite("sonic", "graphics/characters/sonic/sonic.png", {
+    sliceX: 15,
+    sliceY: 9,
     anims: {
-        run: { from: 0, to: 7, loop: true, speed: 60 },
-        jump: { from: 8, to: 15, loop: true, speed: 60 },
+        idle: { from: 0, to: 15, loop: true, speed: 10 },
+        slide: { from: 15, to: 23, loop: false, speed: 30 },
+        walk: { from: 30, to: 40, loop: true, speed: 18 },
+        run: { from: 45, to: 59, loop: true, speed: 25 },
+        speed_up: { from: 60, to: 75, loop: false, speed: 25 },
+        jump: { from: 90, to: 100, loop: true, speed: 60 },
+        wait: { from: 100, to: 105, loop: true, speed: 4 },
     },
 });
 
+// Enemies
 kplay.loadSprite("motobug", "graphics/characters/enemies/motobug.png", {
     sliceX: 5,
     sliceY: 1,

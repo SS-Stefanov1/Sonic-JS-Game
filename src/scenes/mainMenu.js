@@ -46,7 +46,7 @@ export default function mainMenu() {
     ]);
 
     // Adding sonic to the main menu
-    addSonic(kplay.vec2(200, 745));
+    addSonic(kplay.vec2(950, 745), "idle");
 
     kplay.onUpdate(() => {
         // Moving the background
@@ -58,13 +58,13 @@ export default function mainMenu() {
         bgPieces[0].move(-100, 0);
         bgPieces[1].moveTo(bgPieces[0].pos.x + bgWidth * 2, 0);
 
-        // Moving the platforms
-        if (platformPieces[1].pos.x < 0) {
-            platformPieces[0].moveTo(platformPieces[1].pos.x + platformWidth * 4, 450);
-            platformPieces.push(platformPieces.shift());
-        }
+        // // Moving the platforms
+        // if (platformPieces[1].pos.x < 0) {
+        //     platformPieces[0].moveTo(platformPieces[1].pos.x + platformWidth * 4, 450);
+        //     platformPieces.push(platformPieces.shift());
+        // }
 
-        platformPieces[0].move(-3000, 0);
-        platformPieces[1].moveTo(platformPieces[0].pos.x + platformWidth * 4, 450);
+        // platformPieces[0].move(-3000, 0);
+        // platformPieces[1].moveTo(platformPieces[0].pos.x + platformWidth * 4, 450);
     });
 }

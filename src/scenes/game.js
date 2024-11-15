@@ -31,8 +31,8 @@ export default function game() {
 
     kplay.setGravity(3000);
     let gameSpeed = 500;
-    kplay.loop(1, () => {
-        gameSpeed += 25;
+    kplay.loop(0.1, () => {
+        gameSpeed++;
     });
 
     // Score Logic
@@ -40,13 +40,18 @@ export default function game() {
     let score_multip = 1;
 
     const scoreDisplay = kplay.add([kplay.text("Score: 0", { font: "mania", size: 72 }), kplay.pos(25, 25)]);
+    const speedDisplay = kplay.add([
+        kplay.text(`Speed: ${gameSpeed}`, { font: "mania", size: 72 }),
+        kplay.pos(25, 100),
+    ]);
 
     // Spawn Sonic
-    const sonic = addSonic(kplay.vec2(200, 745));
+    const sonic = addSonic(kplay.vec2(200, 745), "walk");
     sonic.setKeybinds();
     sonic.setEvents();
+
     sonic.onCollide("enemies", (enemy_id) => {
-        if (!sonic.isGrounded()) {
+        if (!sonic.isGrounded() || sonic.getCurAnim() === "speed_up") {
             kplay.play("kill_enemy", { volume: 0.5 });
             kplay.play("hyper_ring", { volume: 0.5 });
             kplay.destroy(enemy_id);
@@ -151,6 +156,8 @@ export default function game() {
     spawnRings();
 
     kplay.onUpdate(() => {
+        speedDisplay.text = speedDisplay.text.slice(0, 7) + gameSpeed;
+
         if (sonic.isGrounded()) {
             score_multip = 1;
         }
