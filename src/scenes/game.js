@@ -51,7 +51,7 @@ export default function game() {
     sonic.setEvents();
 
     sonic.onCollide("enemies", (enemy_id) => {
-        if (!sonic.isGrounded() || sonic.getCurAnim() === "speed_up") {
+        if (!sonic.isGrounded() || sonic.state === "sliding") {
             kplay.play("kill_enemy", { volume: 0.5 });
             kplay.play("hyper_ring", { volume: 0.5 });
             kplay.destroy(enemy_id);

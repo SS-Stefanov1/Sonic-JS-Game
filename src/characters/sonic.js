@@ -18,21 +18,15 @@ export function addSonic(pos, animation = "walk") {
                         kplay.play("jump", { volume: 0.3 }); // Playing the jump sound
                     }
                 });
-                kplay.onKeyPress("shift", () => {
+                kplay.onKeyDown("shift", () => {
                     if (this.isGrounded()) {
-                        this.play("speed_up");
-
-                        // this.onAnimEnd("speed_up", () => {
-                        //     if (kplay.isKeyDown("shift")) {
-                        //         this.play("run");
-                        //     } else {
-                        //         this.play("walk");
-                        //     }
-                        // });
+                        this.play("slide");
+                        this.state = "sliding";
                     }
                 });
                 kplay.onKeyRelease("shift", () => {
                     this.play("walk");
+                    this.state = "walking";
                 });
             },
             setEvents() {
