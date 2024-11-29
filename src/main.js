@@ -31,6 +31,14 @@ kplay.loadSprite("motobug", "graphics/characters/enemies/motobug.png", {
     },
 });
 
+kplay.loadSprite("catterpillar", "graphics/characters/enemies/catterpillar.png", {
+    sliceX: 8,
+    sliceY: 2,
+    anims: {
+        crawl: { from: 0, to: 15, loop: true, speed: 18 },
+    },
+});
+
 kplay.loadSprite("roborunner", "graphics/characters/enemies/roborunner.png", {
     sliceX: 8,
     sliceY: 1,

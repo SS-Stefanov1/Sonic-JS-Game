@@ -1,5 +1,6 @@
 import kplay from "../kaplayCtx";
 import { addSonic } from "../characters/sonic";
+import { addCatterpillar } from "../characters/catterpillar";
 
 export default function mainMenu() {
     // Setting the best score

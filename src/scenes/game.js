@@ -1,3 +1,4 @@
+import { addCatterpillar } from "../characters/catterpillar";
 import { addMotobug } from "../characters/motobug";
 import { addRoboRunner } from "../characters/roborunner";
 import { addSonic } from "../characters/sonic";
@@ -31,19 +32,19 @@ export default function game() {
 
     kplay.setGravity(3000);
     let gameSpeed = 500;
+    let distancePassed = 0;
     kplay.loop(0.1, () => {
         gameSpeed++;
+        distancePassed++;
     });
 
     // Score Logic
     let player_score = 0;
     let score_multip = 1;
 
-    const scoreDisplay = kplay.add([kplay.text("Score: 0", { font: "mania", size: 72 }), kplay.pos(25, 25)]);
-    const speedDisplay = kplay.add([
-        kplay.text(`Speed: ${gameSpeed}`, { font: "mania", size: 72 }),
-        kplay.pos(25, 100),
-    ]);
+    const scoreDisplay = kplay.add([kplay.text("Score: 0", { font: "mania", size: 72 }), kplay.pos(20, 90)]);
+    //const speedDisplay = kplay.add([kplay.text(`Speed: ${gameSpeed}`, { font: "mania", size: 72 }), kplay.pos(25, 100)]);
+    const distDisplay = kplay.add([kplay.text("Distance: 0", { font: "mania", size: 72 }), kplay.pos(20, 15)]);
 
     // Spawn Sonic
     const sonic = addSonic(kplay.vec2(200, 745), "walk");
@@ -98,6 +99,9 @@ export default function game() {
 
         spawnEnemy();
     };
+
+    // Spawn Catterpillars
+    enemySpawner(addCatterpillar, { x: 1950, y: 775 }, { min: 1, max: 15 }, 100);
 
     // Spawn Motorbugs
     enemySpawner(addMotobug, { x: 1950, y: 775 }, { min: 0.5, max: 5 }, 300);
@@ -156,7 +160,8 @@ export default function game() {
     spawnRings();
 
     kplay.onUpdate(() => {
-        speedDisplay.text = speedDisplay.text.slice(0, 7) + gameSpeed;
+        //speedDisplay.text = speedDisplay.text.slice(0, 7) + gameSpeed;
+        distDisplay.text = distDisplay.text.slice(0, 10) + distancePassed + "m";
 
         if (sonic.isGrounded()) {
             score_multip = 1;
